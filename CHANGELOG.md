@@ -2,10 +2,6 @@
 
 Notable changes to Survive the Sprint are documented here. Releases use [Semantic Versioning](https://semver.org/).
 
-## [Unreleased]
-
-No accessibility or security remediation has been applied as part of this baseline.
-
 ## [1.0.0] - baseline proposed (date on release)
 
 Initial tracked baseline of the existing game before the accessibility/security remediation work.
