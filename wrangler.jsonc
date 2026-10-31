@@ -1,0 +1,7 @@
+{
+  "name": "survive-the-sprint",
+  "compatibility_date": "2026-10-31",
+  "assets": {
+    "directory": "./public"
+  }
+}
