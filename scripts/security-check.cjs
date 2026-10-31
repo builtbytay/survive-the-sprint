@@ -1,0 +1,11 @@
+const fs=require('node:fs');const path=require('node:path');const assert=require('node:assert/strict');
+const root=path.resolve(__dirname,'..');const read=p=>fs.readFileSync(path.join(root,p),'utf8');
+const html=read('public/index.html'),js=read('public/game.js'),css=read('public/styles.css'),headers=read('public/_headers');
+assert.match(html,/<script src="\.\/game\.js"><\/script>/);assert.match(html,/<link rel="stylesheet" href="\.\/styles\.css">/);
+assert.doesNotMatch(html,/<script(?![^>]*\bsrc=)[^>]*>/i);assert.doesNotMatch(html,/<style\b/i);assert.doesNotMatch(html,/\bon(?:click|load|error|mouseover)\s*=/i);
+assert.match(headers,/script-src 'self'/);assert.doesNotMatch(headers,/script-src[^;\n]*'unsafe-inline'/);
+for(const value of ['default-src \'none\'','object-src \'none\'','base-uri \'none\'','frame-ancestors \'none\'','X-Content-Type-Options: nosniff','Referrer-Policy: no-referrer'])assert.ok(headers.includes(value),value);
+assert.match(js,/function safeModalBody\(/);assert.match(js,/<p>\$\{safeModalBody\(body\)\}<\/p>/);
+assert.doesNotMatch(js,/\b(?:eval\s*\(|new Function\s*\()/);assert.doesNotMatch(js,/\b(?:fetch\s*\(|XMLHttpRequest|WebSocket)\b/);
+assert.ok(css.length>20000&&js.length>50000);
+console.log('Static security assertions passed');
