@@ -155,6 +155,48 @@
  .career-strip{padding:4px 7px;margin-bottom:3px}.workload{margin-bottom:3px}.workstat{padding:3px 1px}
  .canvas-wrap canvas{max-height:26dvh}.station{min-height:48px}.mobile-objective{padding:4px 7px;margin-bottom:3px}
 }
+
+/* Browser and small-viewport compatibility: retain desktop and portrait gameplay. */
+.modal{max-height:calc(100vh - 30px);max-height:calc(100dvh - 30px)}
+@media(max-width:570px){.modal{max-height:calc(100vh - 22px);max-height:calc(100dvh - 22px)}}
+@media(orientation:landscape) and (max-height:700px) and (max-width:920px){
+ html,body{overflow-x:hidden}
+ .wrap{width:100%;max-width:none;padding:4px 8px max(4px,env(safe-area-inset-bottom))}
+ .top{height:30px;margin-bottom:3px;gap:6px}
+ .logo{width:26px;height:26px;font-size:16px;box-shadow:2px 2px 0 #876a43}
+ .brand{gap:7px}.brand h1{font-size:17px}.eyebrow{display:none}
+ .chip{padding:3px 7px}.chip small{font-size:8px}.chip strong{font-size:12px}
+ .small-btn{height:27px;min-height:27px;padding:0 7px;font-size:11px}
+ .career-strip{padding:3px 7px;margin:0 0 3px;font-size:10px}.career-strip span:last-child{font-size:9px}
+ .days{margin-bottom:3px;gap:4px}.daytab{padding:3px 2px;font-size:10px}.daytab small{display:none}
+ .mobile-hud{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;margin:0 0 3px}
+ .mini-meter{padding:2px 6px}.mini-meter-head{font-size:10px}.mini-meter-track{margin-top:2px;height:4px}
+ .mobile-objective{display:none}
+ .workload{gap:4px;margin-bottom:3px}.workstat{padding:3px 1px}.workstat strong{display:inline;font-size:12px}.workstat small{display:inline;font-size:9px;margin-left:3px}
+ .layout{display:block}.layout>.panel{display:grid;grid-template-columns:minmax(0,1fr) minmax(190px,.72fr);grid-template-rows:auto 1fr;align-items:start;border-radius:12px}
+ .stage-title{grid-column:1;grid-row:1;min-height:26px;padding:3px 7px}.stage-title b{font-size:11px}.stage-title .sub{display:none}.clock{font-size:14px}.clock small{font-size:8px}
+ .canvas-wrap{grid-column:1;grid-row:2;padding:0 4px 4px}
+ .canvas-wrap canvas{max-height:calc(100vh - 215px);max-height:calc(100dvh - 215px);width:auto;max-width:100%;margin:auto;border-width:1px;border-radius:8px}
+ .tip{left:9px;bottom:10px;font-size:8px;padding:3px 5px}
+ .stations{grid-column:2;grid-row:1/span 2;border-top:0;border-left:1px solid #354761;padding:4px 5px}
+ .station-header{display:none}.action-live{min-height:24px;padding:3px 5px;font-size:10px;gap:3px;margin:0 0 4px}.action-track{width:38px;height:5px}
+ .station-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:3px}.station{min-height:38px;font-size:10px;padding:2px;gap:1px}.station .symbol{font-size:16px}.station small{display:none}
+ .mobile-board{display:block!important;grid-column:2;grid-row:3;padding:0 5px 4px;text-align:center}.board-trigger{min-height:25px;padding:3px 6px;font-size:10px}
+ .progress-text,.layout>.panel>.progress-line{display:none}
+ .side{display:block}.side>.stats,.side>.mission,.side>.log{display:none}.side>.event:not(.has-event){display:none}
+ .event.has-event{position:fixed;z-index:19;left:8px;right:8px;bottom:max(6px,env(safe-area-inset-bottom));min-height:0;max-height:85vh;max-height:85dvh;overflow:auto;box-shadow:0 0 0 150vmax #080e1d99}
+ .footer{display:none}
+ .modal{max-height:calc(100vh - 14px);max-height:calc(100dvh - 14px);padding:12px 15px}
+ .modal-art{font-size:35px;margin-bottom:5px}.modal p{margin-bottom:8px}
+}
+@media(orientation:portrait) and (max-width:360px) and (max-height:620px){
+ .top{height:32px;margin-bottom:3px}.career-strip{padding:3px 6px;margin-bottom:2px}
+ .days{margin-bottom:2px}.daytab{padding:2px}.mobile-hud{margin-bottom:2px}.mini-meter{padding:2px 4px}
+ .workload{margin-bottom:2px}.workstat{padding:2px 1px}.mobile-objective{padding:3px 6px;margin-bottom:2px}
+ .stage-title{min-height:27px;padding:3px 7px}.canvas-wrap canvas{max-height:23dvh}
+ .progress-text{margin:1px 7px}.mobile-board{padding:2px 6px}.stations{padding:4px 6px}.station{min-height:45px}
+ .footer{display:none}
+}
 </style></head>
 <body><main class="wrap"><header class="top"><div class="brand"><div class="logo" aria-hidden="true">⌨</div><div><div class="eyebrow">Keep the Developer Alive · Vol. 2</div><h1>Survive the Sprint</h1></div></div><div class="top-actions"><div class="chip"><small>CAREER SCORE</small><strong id="score">0</strong></div><button id="sound" class="small-btn" aria-label="Toggle sound">♪ On</button><button id="pause" class="small-btn" aria-label="Pause game">Ⅱ</button></div></header>
 <div class="career-strip"><span id="career-title">WEEK 1 · DEVELOPER</span><span id="career-detail">0 reputation · 0 tech debt</span></div>
@@ -385,6 +427,13 @@ function interactDuck(){
 }
 
 
+// Anchor the invisible, accessible duck control to the drawn duck, not the CSS wrapper.
+function positionDuckHotspot(){
+ const rect=canvas.getBoundingClientRect(),wrap=canvas.parentElement.getBoundingClientRect(),duck=$('duck-hotspot');
+ if(!rect.width||!rect.height)return;
+ duck.style.left=(rect.left-wrap.left+282*rect.width/W)+'px';
+ duck.style.top=(rect.top-wrap.top+128*rect.height/H)+'px';
+}
 function pointer(e){if(!s||s.mode!=='playing')return;const rect=canvas.getBoundingClientRect();let x=(e.clientX-rect.left)*W/rect.width,y=(e.clientY-rect.top)*H/rect.height;
  if(Math.hypot(x-282,y-128)<27){interactDuck();return}
  if(x>=385&&x<=510&&y>=344&&y<=454){openBoard();return}
@@ -490,11 +539,20 @@ function update(){if(!s)return;$('score').textContent=Math.round(s.score).toLoca
  if(!s.event&&s.eventFeedback&&performance.now()<s.feedbackUntil){$('event-panel').classList.add('has-event');$('event-panel').innerHTML=`<div class="event-feedback"><b>✅ ${esc(s.eventFeedback.title)}</b><p>${esc(s.eventFeedback.changes)}</p><p>${esc(s.eventFeedback.body)}</p></div>`;renderedEvent=null;}else{$('event-panel').classList.toggle('has-event',!!s.event);if(!s.event&&s.eventFeedback){s.eventFeedback=null;renderedEvent={};}}if(s.event&&renderedEvent!==s.event){const e=s.event;renderedEvent=s.event;$('event-panel').innerHTML=`<div class="event-top"><span class="micro">🚨 INCOMING DISASTER</span><span class="event-badge">DECIDE QUICKLY</span></div><h2>${e.icon} ${esc(e.title)}</h2><p>${esc(e.body)}</p><div class="choices"><button class="choice" data-choice="0">${esc(e.a[0])}<small>${esc(describeDelta(e.ea))}</small></button><button class="choice" data-choice="1">${esc(e.b[0])}<small>${esc(describeDelta(e.eb))}</small></button></div><div class="progress-line"><span id="event-left" style="width:${Math.max(0,e.time/16*100)}%"></span></div>`}
  else if(!s.event&&renderedEvent!==null){renderedEvent=null;$('event-panel').innerHTML=`<div class="empty-event"><div class="big">${s.day===3?'🔥':'📨'}</div><h2>${s.active==='desk'?'Deep work in progress.':'Suspiciously quiet.'}</h2><p>${s.active==='desk'?'Enjoy these twelve seconds of uninterrupted productivity.':'Something terrible will arrive in your inbox shortly.'}</p></div>`}
 }
-const rr=(x,y,w,h,r,fill,stroke,lw=1)=>{ctx.beginPath();ctx.roundRect(x,y,w,h,r);if(fill){ctx.fillStyle=fill;ctx.fill()}if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=lw;ctx.stroke()}};
+// Older Canvas implementations need the same rounded path for fills, strokes, and clips.
+function roundedPath(x,y,w,h,r){
+ const radius=Math.max(0,Math.min(r,w/2,h/2));
+ if(typeof ctx.roundRect==='function'){ctx.roundRect(x,y,w,h,radius);return}
+ ctx.moveTo(x+radius,y);ctx.lineTo(x+w-radius,y);ctx.quadraticCurveTo(x+w,y,x+w,y+radius);
+ ctx.lineTo(x+w,y+h-radius);ctx.quadraticCurveTo(x+w,y+h,x+w-radius,y+h);
+ ctx.lineTo(x+radius,y+h);ctx.quadraticCurveTo(x,y+h,x,y+h-radius);
+ ctx.lineTo(x,y+radius);ctx.quadraticCurveTo(x,y,x+radius,y);ctx.closePath();
+}
+const rr=(x,y,w,h,r,fill,stroke,lw=1)=>{ctx.beginPath();roundedPath(x,y,w,h,r);if(fill){ctx.fillStyle=fill;ctx.fill()}if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=lw;ctx.stroke()}};
 function text(t,x,y,size=14,color='#24364c',font='900',align='center'){ctx.fillStyle=color;ctx.textAlign=align;ctx.textBaseline='middle';ctx.font=`${font} ${size}px ui-rounded, Trebuchet MS, sans-serif`;ctx.fillText(t,x,y)}
 function draw(){if(!s)return;let t=performance.now()/1000;ctx.clearRect(0,0,W,H);
  // office floor
- rr(14,18,872,488,19,'#c6b9a2','#84775e',6);ctx.save();ctx.beginPath();ctx.roundRect(22,26,856,473,13);ctx.clip();ctx.strokeStyle='#aa9a84';ctx.lineWidth=1;for(let x=22;x<890;x+=50){ctx.beginPath();ctx.moveTo(x,28);ctx.lineTo(x,500);ctx.stroke()}for(let y=30;y<507;y+=50){ctx.beginPath();ctx.moveTo(22,y);ctx.lineTo(880,y);ctx.stroke()}
+ rr(14,18,872,488,19,'#c6b9a2','#84775e',6);ctx.save();ctx.beginPath();roundedPath(22,26,856,473,13);ctx.clip();ctx.strokeStyle='#aa9a84';ctx.lineWidth=1;for(let x=22;x<890;x+=50){ctx.beginPath();ctx.moveTo(x,28);ctx.lineTo(x,500);ctx.stroke()}for(let y=30;y<507;y+=50){ctx.beginPath();ctx.moveTo(22,y);ctx.lineTo(880,y);ctx.stroke()}
  // wall with windows
  rr(24,27,852,51,4,'#e0d5ba');for(let x of [290,335,555,600]){rr(x,29,32,32,3,'#98d9d8','#748aa0',3);ctx.fillStyle='#faf0c7';ctx.fillRect(x+3,29,3,30)}
  text('SPRINT HQ',447,52,24,'#667284','1000');
@@ -531,6 +589,9 @@ function togglePause(){if(!s||s.mode==='intro'||s.mode==='lost'||s.mode==='won'|
 $('pause').addEventListener('click',togglePause);
 window.addEventListener('keydown',e=>{if(e.target.matches('input,textarea'))return;const k=e.key.toLowerCase();if(['arrowleft','arrowright','arrowup','arrowdown',' '].includes(k))e.preventDefault();if(k==='p'&&!e.repeat){togglePause();return}if(k==='b'&&!e.repeat){if(s?.mode==='board')closeBoard();else openBoard();return}if(k==='escape'){if(s?.mode==='board')closeBoard();else if(s?.mode==='meetingMenu')closeMeeting();return}if(s?.mode!=='playing')return;if(k>='1'&&k<='5'){stationTarget(Object.keys(STATIONS)[Number(k)-1]);return}if(k===' '){if(s.active)return;let near=null;for(const [name,st]of Object.entries(STATIONS)){if(Math.hypot(s.position.x-st.x,s.position.y-st.y)<55)near=name}if(near){s.active=near;s.destination=null}return}if(['w','a','s','d','arrowleft','arrowright','arrowup','arrowdown'].includes(k))keys.add(k)});
 window.addEventListener('keyup',e=>keys.delete(e.key.toLowerCase()));window.addEventListener('blur',()=>{keys.clear();if(s?.mode==='playing')togglePause()});document.addEventListener('visibilitychange',()=>{if(document.hidden&&s?.mode==='playing')togglePause()});
-s=fresh();update();requestAnimationFrame(animate);
+// Rescale hit targets after orientation changes, iframe/modal resizes, or browser UI changes.
+window.addEventListener('resize',positionDuckHotspot);
+if(typeof ResizeObserver!=='undefined'){new ResizeObserver(positionDuckHotspot).observe(canvas)}
+s=fresh();update();requestAnimationFrame(positionDuckHotspot);requestAnimationFrame(animate);
 })();
 </script></body></html>
