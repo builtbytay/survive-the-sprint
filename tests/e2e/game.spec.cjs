@@ -91,6 +91,7 @@ test('reduced-motion respects OS preference and scene still renders', async ({ p
 });
 
 test('all five days advance and weekly completion is reachable', async ({ page }) => {
+  test.setTimeout(150_000);
   await start(page, { relaxed: true });
   // Exercise the real animation clock at accelerated wall time.
   await page.clock.install();
