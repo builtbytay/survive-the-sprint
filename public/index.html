@@ -156,6 +156,13 @@
  .canvas-wrap canvas{max-height:26dvh}.station{min-height:48px}.mobile-objective{padding:4px 7px;margin-bottom:3px}
 }
 
+.accessibility-settings{border:1px solid #8091ac;border-radius:11px;margin:12px 0;padding:9px 12px;text-align:left;background:#1b2b42}
+.accessibility-settings .settings-title{font-size:12px;font-weight:900;margin-bottom:6px;color:#f5efdc}
+.accessibility-settings label{display:flex;gap:9px;align-items:center;font-size:12px;line-height:1.35;padding:5px 0;color:#eef3fc;cursor:pointer}
+.accessibility-settings input{width:19px;height:19px;flex-shrink:0;accent-color:#b3e6d3}
+.accessibility-settings small{display:block;font-size:10px;color:#cdd9e9;margin:2px 0 2px 28px}
+#office:focus-visible{outline:3px solid #ffe092;outline-offset:3px}
+@media(max-width:570px) and (max-height:700px){.accessibility-settings{margin:7px 0;padding:6px 9px}.accessibility-settings label{padding:3px 0}.accessibility-settings small{margin-left:28px}}
 /* Browser and small-viewport compatibility: retain desktop and portrait gameplay. */
 .modal{max-height:calc(100vh - 30px);max-height:calc(100dvh - 30px)}
 @media(max-width:570px){.modal{max-height:calc(100vh - 22px);max-height:calc(100dvh - 22px)}}
@@ -212,15 +219,15 @@
 <button class="workstat" id="hud-meetings" type="button"><strong id="hud-meetings-n">0</strong><small> Meetings</small></button>
 <button class="workstat" id="hud-role" type="button"><strong id="hud-role-n">0</strong><small> Duties</small></button>
 </div>
-<div class="layout"><div class="panel"><div class="stage-title"><div><b id="scene-day">Monday · Sprint Planning Hell</b><div class="sub" id="scene-sub">Five days. One developer. No reasonable requests.</div></div><div class="clock"><small>OFFICE TIME</small><span id="clock">9:00 AM</span></div></div><div class="canvas-wrap"><button class="sr-only" id="duck-access" type="button" aria-label="Inspect rubber duck">Inspect rubber duck</button><canvas id="office" width="900" height="520" role="img" aria-label="Interactive top-down office. Use station buttons or arrow keys to move your developer."></canvas><button type="button" id="duck-hotspot" title="Strange rubber duck" aria-label="Inspect a suspicious rubber duck on the desk"><span class="sr-only">Inspect duck</span></button><div class="tip" id="canvas-tip">TAP STATIONS · CHECK THE OFFICE</div></div><div class="mobile-board" style="display:none"><button class="board-trigger" id="mobile-board-button" type="button">📋 Sprintboard · prioritize / manage</button></div><div class="progress-text"><span>WORKDAY</span><span id="progress-clock">9:00 → 5:00</span></div><div class="progress-line" style="margin:0 17px 15px;width:calc(100% - 34px)"><span id="day-progress" style="width:0%"></span></div><div class="stations"><div class="station-header"><b>Where should your developer go?</b><button class="board-trigger" id="board-button" type="button">📋 Open sprintboard [B]</button></div><div class="action-live" aria-live="off"><span class="action-name" id="action-name">Choose a workstation to begin</span><div class="action-track"><span id="action-progress"></span></div><span class="action-state" id="action-state">READY</span></div><div class="station-grid" id="station-list"><button type="button" class="station" data-station="desk"><span class="symbol">💻</span>Code<small>Ship tickets</small></button><button type="button" class="station" data-station="coffee"><span class="symbol">☕</span>Coffee<small>+ caffeine</small></button><button type="button" class="station" data-station="server"><span class="symbol">🖥️</span>Servers<small>Fix bugs</small></button><button type="button" class="station" data-station="meeting"><span class="symbol">📅</span>Meetings<small>Attend / decline</small></button><button type="button" class="station" data-station="sofa"><span class="symbol">🛋️</span>Break<small>Recover</small></button></div></div></div>
+<div class="layout"><div class="panel"><div class="stage-title"><div><b id="scene-day">Monday · Sprint Planning Hell</b><div class="sub" id="scene-sub">Five days. One developer. No reasonable requests.</div></div><div class="clock"><small>OFFICE TIME</small><span id="clock">9:00 AM</span></div></div><div class="canvas-wrap"><canvas id="office" width="900" height="520" tabindex="0" role="img" aria-label="Interactive top-down office. Use station buttons or arrow keys to move your developer."></canvas><button type="button" id="duck-hotspot" title="Strange rubber duck" aria-label="Inspect a suspicious rubber duck on the desk"><span class="sr-only">Inspect duck</span></button><div class="tip" id="canvas-tip">TAP STATIONS · CHECK THE OFFICE</div></div><div class="mobile-board" style="display:none"><button class="board-trigger" id="mobile-board-button" type="button">📋 Sprintboard · prioritize / manage</button></div><div class="progress-text"><span>WORKDAY</span><span id="progress-clock">9:00 → 5:00</span></div><div class="progress-line" style="margin:0 17px 15px;width:calc(100% - 34px)"><span id="day-progress" style="width:0%"></span></div><div class="stations"><div class="station-header"><b>Where should your developer go?</b><button class="board-trigger" id="board-button" type="button">📋 Open sprintboard [B]</button></div><div class="action-live" aria-live="off"><span class="action-name" id="action-name">Choose a workstation to begin</span><div class="action-track"><span id="action-progress"></span></div><span class="action-state" id="action-state">READY</span></div><div class="station-grid" id="station-list"><button type="button" class="station" data-station="desk"><span class="symbol">💻</span>Code<small>Ship tickets</small></button><button type="button" class="station" data-station="coffee"><span class="symbol">☕</span>Coffee<small>+ caffeine</small></button><button type="button" class="station" data-station="server"><span class="symbol">🖥️</span>Servers<small>Fix bugs</small></button><button type="button" class="station" data-station="meeting"><span class="symbol">📅</span>Meetings<small>Attend / decline</small></button><button type="button" class="station" data-station="sofa"><span class="symbol">🛋️</span>Break<small>Recover</small></button></div></div></div>
 <div class="side"><section class="panel stats"><div class="section-title"><h2>Developer vital signs</h2><span class="sub" id="mood">Suspiciously optimistic</span></div><div class="meter caffeine"><div class="meter-head"><span>☕ Caffeine</span><span id="caffeine-n">78</span></div><div class="progress-line"><span id="caffeine-b" style="width:78%"></span></div></div><div class="meter morale"><div class="meter-head"><span>💖 Morale</span><span id="morale-n">80</span></div><div class="progress-line"><span id="morale-b" style="width:80%"></span></div></div><div class="meter patience"><div class="meter-head"><span>🧠 Patience</span><span id="patience-n">82</span></div><div class="progress-line"><span id="patience-b" style="width:82%"></span></div></div><div class="stats-bottom"><div class="mini-card"><strong id="tickets">0/3</strong><small>Tickets today</small></div><div class="mini-card"><strong id="bugs">0</strong><small>Open bugs</small></div><div class="mini-card"><strong id="interrupts">0</strong><small>Actions taken</small></div></div></section>
 <section class="panel mission"><div class="micro" id="mission-label">TODAY'S MISSION</div><h2 id="mission-title">Sprint Planning Hell</h2><p id="mission-body">Stakeholders have discovered the backlog. Your job is to survive.</p><div class="goal" id="mission-goal">🎯 Ship 3 tickets before 5 PM.</div></section>
 <section class="panel event" id="event-panel" aria-live="polite"><div class="empty-event"><div class="big">📨</div><h2>Suspiciously quiet.</h2><p>That's usually when someone schedules a meeting.</p></div></section>
 <section class="panel log"><h2>📟 Office chatter</h2><div id="log"><div class="logline">No incidents. This is probably a trap.</div></div></section></div></div><footer class="footer"><span>WASD / arrows to move · 1–5 to navigate · Space near a station · P to pause</span><span>No ads. No accounts. No mercy.</span></footer></main>
-<div class="overlay" id="overlay"><div class="modal" id="modal"><span class="modal-art">☕💻🔥</span><div class="micro">A VERY NORMAL SOFTWARE COMPANY</div><h2>Keep the Developer Alive.</h2><p>Survive Monday through Friday, then advance to harder weeks, earn promotions, and inherit increasingly ridiculous responsibilities. Tickets, bugs, meetings, and duties follow you.</p><p>Tap a station to walk there. The sprintboard lets you prioritize tickets and manage new responsibilities. The meeting room now handles real invitations. On desktop, keys 1–5, WASD, and arrow keys also work.</p><button class="primary" id="modal-btn">Start career →</button><p class="fineprint">Progress and poor decisions carry into the next day. Your best score stays on this device. No login, no ads, no data sent anywhere.</p></div></div>
+<div class="overlay" id="overlay"><div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-heading"><span class="modal-art">☕💻🔥</span><div class="micro">A VERY NORMAL SOFTWARE COMPANY</div><h2 id="modal-heading">Keep the Developer Alive.</h2><p>Survive Monday through Friday, then advance to harder weeks, earn promotions, and inherit increasingly ridiculous responsibilities. Tickets, bugs, meetings, and duties follow you.</p><p>Tap a station to walk there. The sprintboard lets you prioritize tickets and manage new responsibilities. The meeting room now handles real invitations. On desktop, keys 1–5, WASD, and arrow keys also work.</p><div id="intro-accessibility-settings"></div><button class="primary" id="modal-btn">Start career →</button><p class="fineprint">Progress and poor decisions carry into the next day. Your best score stays on this device. No login, no ads, no data sent anywhere.</p></div></div>
 <div class="overlay" id="board-overlay" hidden><div class="modal board-modal" id="board-modal" role="dialog" aria-modal="true" aria-label="Sprintboard"></div></div>
 <div class="overlay" id="meeting-overlay" hidden><div class="modal" id="meeting-modal" role="dialog" aria-modal="true" aria-label="Meeting invitation"></div></div>
-<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div><div id="game-announcements" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
 <script>
 (()=>{'use strict';
 const $=id=>document.getElementById(id),canvas=$('office'),ctx=canvas.getContext('2d'),W=900,H=520;
@@ -281,6 +288,49 @@ function rand(min,max){return min+Math.random()*(max-min)}
 function choose(a){return a[Math.floor(Math.random()*a.length)]}
 function safeStoreGet(k){try{return localStorage.getItem(k)}catch{return null}}
 function safeStoreSet(k,v){try{localStorage.setItem(k,String(v))}catch{}}
+const reducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
+let accessiblePace=safeStoreGet('survive-sprint-accessible-pace')==='1';
+let singleKeyShortcuts=safeStoreGet('survive-sprint-shortcuts')!=='0';
+let activeDialog=null,previousDialogFocus=null,eventFocusReturn=null;
+const STATION_KEYS=['desk','coffee','server','meeting','sofa'];
+function settingsMarkup(){return '<div class="accessibility-settings"><div class="settings-title">Accessibility & controls</div><label><input type="checkbox" data-setting="pace"> Relaxed timing</label><small>Double the workday; incoming decisions and meeting invites never expire.</small><label><input type="checkbox" data-setting="hotkeys"> Single-key shortcuts</label><small>WASD, 1–5, B, and P. Turn off to use buttons and arrow keys instead.</small></div>'}
+function bindSettings(root){
+ const pace=root.querySelector('[data-setting="pace"]'),hotkeys=root.querySelector('[data-setting="hotkeys"]');
+ if(pace){pace.checked=accessiblePace;pace.addEventListener('change',()=>{
+  if(accessiblePace===pace.checked)return;
+  accessiblePace=pace.checked;safeStoreSet('survive-sprint-accessible-pace',accessiblePace?'1':'0');
+  if(s?.mode==='paused')s.duration*=accessiblePace?2:.5;
+  if(s?.mode==='paused')update();
+ })}
+ if(hotkeys){hotkeys.checked=singleKeyShortcuts;hotkeys.addEventListener('change',()=>{
+  singleKeyShortcuts=hotkeys.checked;safeStoreSet('survive-sprint-shortcuts',singleKeyShortcuts?'1':'0');keys.clear();
+ })}
+}
+function showDialog(overlayId,focusSelector='button'){
+ const overlay=$(overlayId);previousDialogFocus=document.activeElement;
+ overlay.hidden=false;document.querySelector('main').inert=true;activeDialog=overlayId;
+ const focus=overlay.querySelector(focusSelector)||overlay.querySelector('button');
+ focus?.focus({preventScroll:true});
+}
+function hideDialog(overlayId){
+ $(overlayId).hidden=true;document.querySelector('main').inert=false;activeDialog=null;
+ const previous=previousDialogFocus;previousDialogFocus=null;
+ if(previous?.isConnected&&!previous.closest('[hidden]')&&previous!==document.body)previous.focus({preventScroll:true});
+}
+document.addEventListener('keydown',e=>{
+ if(e.key!=='Tab'||!activeDialog)return;
+ const dialog=$(activeDialog);
+ const focusables=[...dialog.querySelectorAll('button:not(:disabled),input:not(:disabled),a[href],[tabindex]:not([tabindex="-1"])')].filter(x=>x.getClientRects().length&&!x.closest('[hidden]'));
+ if(!focusables.length){e.preventDefault();return}
+ const first=focusables[0],last=focusables[focusables.length-1];
+ if(e.shiftKey&&(document.activeElement===first||!dialog.contains(document.activeElement))){e.preventDefault();last.focus()}
+ else if(!e.shiftKey&&(document.activeElement===last||!dialog.contains(document.activeElement))){e.preventDefault();first.focus()}
+},true);
+function announceGame(message){const region=$('game-announcements');region.textContent='';requestAnimationFrame(()=>{region.textContent=message})}
+function returnEventFocus(){
+ const previous=eventFocusReturn;eventFocusReturn=null;
+ if(previous?.isConnected&&!previous.closest('[hidden]')&&!previous.closest('[inert]'))previous.focus({preventScroll:true});
+}
 function sound(freq=440,dur=.09,type='sine',vol=.045){if(muted)return;try{audio ||=new (window.AudioContext||window.webkitAudioContext)();if(audio.state==='suspended')audio.resume();let osc=audio.createOscillator(),gain=audio.createGain();osc.type=type;osc.frequency.setValueAtTime(freq,audio.currentTime);gain.gain.setValueAtTime(vol,audio.currentTime);gain.gain.exponentialRampToValueAtTime(.001,audio.currentTime+dur);osc.connect(gain);gain.connect(audio.destination);osc.start();osc.stop(audio.currentTime+dur)}catch{}}
 function ping(){sound(570,.09,'triangle');setTimeout(()=>sound(840,.11,'triangle'),80)}
 function toast(text){const el=$('toast');el.textContent=text;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),2600)}
@@ -290,7 +340,7 @@ function pace(){return s.duration/85}
 function fresh(){return{mode:'intro',week:1,roleIndex:0,reputation:0,techDebt:0,teamMorale:78,weekShipped:0,weekMissed:0,weekMeetings:0,weekRoleDone:0,day:0,t:0,duration:115,caffeine:78,morale:80,patience:82,bugs:0,meetings:[],meetingSeq:0,meetingSelected:null,nextMeeting:17,meetingMode:null,meetingWork:0,meetingThreat:0,ticketsDone:0,totalDone:0,actions:0,goal:3,work:0,serverWork:0,intercepts:0,blockedToday:0,blockTime:0,coffeeTime:0,restTime:0,score:0,position:{x:452,y:285},destination:null,active:null,actionTimer:0,demoWork:0,demoDone:false,deployWork:0,deployed:false,bonusPhase:0,playedEvent:[],event:null,eventFeedback:null,feedbackUntil:0,nextEvent:11,log:[],badDays:0,dayRecaps:[],duckHits:[],duckEaster:false,duckReward:false,duckGlow:0,duckFridayTaps:0,particles:[],dayInitiated:false,readiness:false,bugSpawn:0,hadCrisis:false,priority:1,roleTasks:0,roleMode:false,roleWork:0,carry:0,budget:3}}
 
 
-function start(){s=fresh();s.mode='playing';$('overlay').hidden=true;startDay(0);ping();last=performance.now();}
+function start(){s=fresh();s.mode='playing';hideDialog('overlay');startDay(0);canvas.focus({preventScroll:true});ping();last=performance.now();}
 function startDay(idx){
  s.day=idx;s.t=0;s.mode='playing';s.duration=Math.max(100,115-(s.week-1)*1.3);
  s.goal=DAYS[idx].tickets+Math.min(2,Math.floor((s.week-1)/2))+(s.carry||0);s.carry=0;s.ticketsDone=0;s.work=0;s.serverWork=0;s.deployWork=0;s.meetingWork=0;s.meetingMode=null;s.blockTime=0;s.coffeeTime=0;s.restTime=0;s.event=null;s.eventFeedback=null;s.playedEvent=[];s.nextEvent=Math.max(8,rand(10,14)-Math.min(3,s.week-1))*pace();
@@ -304,7 +354,7 @@ function startDay(idx){
 }
 
 
-function openModal({art,tag,title,body,btn,action,summary,quote}){const modal=$('modal');modal.innerHTML=`<span class="modal-art">${art}</span><div class="micro">${esc(tag)}</div><h2>${esc(title)}</h2><p>${body}</p>${summary?`<div class="results">${summary.map(v=>`<div class="result"><strong>${esc(v[0])}</strong><small>${esc(v[1])}</small></div>`).join('')}</div>`:''}${quote?`<div class="dev-quote">“${esc(quote)}”</div>`:''}<button class="primary" id="modal-btn">${esc(btn)}</button><p class="fineprint">Progress is local to this browser. No ads, accounts, or sharing.</p>`;$('overlay').hidden=false;$('modal-btn').addEventListener('click',action)}
+function openModal({art,tag,title,body,btn,action,summary,quote,settings=false}){const modal=$('modal');modal.innerHTML=`<span class="modal-art">${art}</span><div class="micro">${esc(tag)}</div><h2 id="modal-heading">${esc(title)}</h2><p>${body}</p>${summary?`<div class="results">${summary.map(v=>`<div class="result"><strong>${esc(v[0])}</strong><small>${esc(v[1])}</small></div>`).join('')}</div>`:''}${quote?`<div class="dev-quote">“${esc(quote)}”</div>`:''}${settings?settingsMarkup():''}<button class="primary" id="modal-btn">${esc(btn)}</button><p class="fineprint">Progress is local to this browser. No ads, accounts, or sharing.</p>`;if(settings)bindSettings(modal);$('modal-btn').addEventListener('click',action);showDialog('overlay','#modal-btn')}
 function afterDay(){
  s.mode='between';s.destination=null;s.active=null;keys.clear();
  const missed=Math.max(0,s.goal-s.ticketsDone);s.carry=missed;s.weekMissed+=missed;s.weekShipped+=s.ticketsDone;
@@ -318,7 +368,7 @@ function afterDay(){
  const d=s.day;s.dayRecaps.push({week:s.week,day:d,done:s.ticketsDone,goal:s.goal,missed,bugs:s.bugs});
  if(d===4){endWeek();return}
  let body=`You shipped <b>${s.ticketsDone} of ${s.goal}</b> tickets. ${missed?`${missed} carry into tomorrow.`:'Your ticket queue is clear.'} <b>${s.bugs}</b> bugs remain. ${s.roleTasks?`<b>${s.roleTasks}</b> career duties still need attention.`:''}`;
- openModal({art:DAYS[d].icon,tag:`WEEK ${s.week} · END OF ${DAY_NAMES[d].toUpperCase()}`,title:missed?'The backlog remembers.':'One day down. Somehow.',body,btn:`Continue to ${DAY_NAMES[d+1]} →`,action:()=>{$('overlay').hidden=true;startDay(d+1)},summary:[[`${s.ticketsDone}/${s.goal}`,'Tickets shipped'],[String(s.bugs),'Open bugs'],[String(Math.round(s.reputation)),'Reputation']],quote:choose(['I think my coffee has a coffee problem.','Please do not call this a quick win.','This sprint has become an endurance sport.'])});update();
+ openModal({art:DAYS[d].icon,tag:`WEEK ${s.week} · END OF ${DAY_NAMES[d].toUpperCase()}`,title:missed?'The backlog remembers.':'One day down. Somehow.',body,btn:`Continue to ${DAY_NAMES[d+1]} →`,action:()=>{hideDialog('overlay');startDay(d+1)},summary:[[`${s.ticketsDone}/${s.goal}`,'Tickets shipped'],[String(s.bugs),'Open bugs'],[String(Math.round(s.reputation)),'Reputation']],quote:choose(['I think my coffee has a coffee problem.','Please do not call this a quick win.','This sprint has become an endurance sport.'])});update();
 }
 function endWeek(){
  s.mode='won';const achieved=s.deployed && s.weekShipped>=Math.max(11,12+Math.floor((s.week-1)*2)) && s.weekMissed<=5+s.week && s.reputation>=10+s.roleIndex*7 && s.roleTasks<=Math.max(1,s.roleIndex);
@@ -336,7 +386,7 @@ function nextWeek(){
  s.caffeine=clamp(Math.max(62,s.caffeine+25));s.morale=clamp(Math.max(56,s.morale+24));s.patience=clamp(Math.max(56,s.patience+27));
  s.bugs=Math.max(0,s.bugs-1);s.techDebt+=Math.ceil(s.bugs/3);s.teamMorale=clamp(s.teamMorale+7);s.carry=Math.min(s.carry,4);s.budget=3;
  s.weekShipped=0;s.weekMissed=0;s.weekMeetings=0;s.weekRoleDone=0;s.demoDone=false;s.demoWork=0;s.deployed=false;s.deployWork=0;s.badDays=0;s.duckHits=[];s.duckFridayTaps=0;s.roleTasks=Math.min(4,s.roleTasks);
- $('overlay').hidden=true;startDay(0);toast(`Week ${old+1}: ${ROLES[s.roleIndex].title}. New sprint, old problems.`);last=performance.now();
+ hideDialog('overlay');startDay(0);toast(`Week ${old+1}: ${ROLES[s.roleIndex].title}. New sprint, old problems.`);last=performance.now();
 }
 
 
@@ -373,23 +423,23 @@ function openBoard(){
  <h3 style="margin-top:14px">${role.icon} ${esc(role.task)}</h3><p>${s.roleIndex?`${s.roleTasks} duties pending · ${s.weekRoleDone} handled this week. ${role.station==='sofa'?'Go to the break room to mentor.':role.station==='desk'?'Code reviews happen at your desk.':'Management obligations happen in the meeting room.'}`:'Promotions unlock junior mentoring, code reviews, people management, and executive requests.'}</p>
  ${s.roleIndex&&s.roleTasks?`<button class="board-option" id="board-role">Handle a ${esc(role.title)} duty →<small>Walk to ${esc(STATIONS[role.station].title)}. Takes 4.5 seconds.</small></button>`:''}
  ${s.roleIndex>=4?`<h3>💰 Director budget · ${s.budget} left</h3><p>Outsource a tricky bug or save the budget for later.</p><button class="board-option" id="board-budget" ${s.budget<1||s.bugs<1?'disabled':''}>Fund emergency QA · 1 budget<small>Remove 1 bug. A slightly defensible expense.</small></button>`:''}<p>⭐ Reputation ${Math.round(s.reputation)} · 👥 Team morale ${Math.round(s.teamMorale)} · 📅 Week ${s.week}</p></div></div>`;
- $('board-overlay').hidden=false;modal.querySelector('#board-close').addEventListener('click',closeBoard);
+ showDialog('board-overlay','#board-close');modal.querySelector('#board-close').addEventListener('click',closeBoard);
  modal.querySelectorAll('[data-priority]').forEach(b=>b.addEventListener('click',()=>{s.priority=Number(b.dataset.priority);modal.querySelectorAll('[data-priority]').forEach(el=>el.classList.toggle('selected',el===b))}));
  const budgetButton=modal.querySelector('#board-budget');if(budgetButton)budgetButton.addEventListener('click',()=>{if(s.budget<=0||s.bugs<=0)return;s.budget--;s.bugs--;s.score+=40;s.actions++;closeBoard();toast('💰 QA contractor funded. One bug gone. Finance is watching.')});
  const roleButton=modal.querySelector('#board-role');if(roleButton)roleButton.addEventListener('click',()=>{s.roleMode=true;s.roleWork=0;closeBoard();stationTarget(role.station);toast('Career duty queued. Finish it at the highlighted station.')});
 }
-function closeBoard(){if(!s||s.mode!=='board')return;$('board-overlay').hidden=true;s.mode='playing';last=performance.now();update()}
+function closeBoard(){if(!s||s.mode!=='board')return;hideDialog('board-overlay');s.mode='playing';last=performance.now();update()}
 function openMeeting(){
  if(!s||s.mode!=='playing')return;
  if(!s.meetings.length){s.active=null;toast('📅 No meetings waiting. An unprecedented achievement.');return}
  s.mode='meetingMenu';s.active=null;keys.clear();s.meetingSelected=s.meetings[0].id;
  const m=s.meetings[0];$('meeting-modal').innerHTML=`<div class="micro">CALENDAR INVITATION · ${m.mandatory?'MANDATORY':'OPTIONAL'}</div><span class="modal-art">📅</span><h2>${esc(m.title)}</h2><p>${m.mandatory?'Attendance matters for your reputation.':'You can decline, but there may be consequences.'} This invite expires in ${Math.ceil(m.expires)} seconds of gameplay.</p><div class="meeting-actions"><button id="attend-meeting">Attend · 3.5s</button><button id="decline-meeting">Decline</button><button id="later-meeting">Not now</button></div><p class="fineprint">Attending costs energy, but boosts reputation. Declining saves time. Ignoring expires with a penalty.</p>`;
- $('meeting-overlay').hidden=false;
+ showDialog('meeting-overlay','#attend-meeting');
  $('attend-meeting').addEventListener('click',()=>{const m=s.meetings.find(m=>m.id===s.meetingSelected);if(!m)return;closeMeeting();s.meetingMode={id:m.id,mandatory:m.mandatory};s.active='meeting';s.meetingWork=0;update()});
  $('decline-meeting').addEventListener('click',()=>{const m=s.meetings.find(m=>m.id===s.meetingSelected);if(!m)return;resolveMeeting(m,false);closeMeeting();update()});
  $('later-meeting').addEventListener('click',()=>{closeMeeting();update()});
 }
-function closeMeeting(){if(!s||s.mode!=='meetingMenu')return;$('meeting-overlay').hidden=true;s.mode='playing';last=performance.now()}
+function closeMeeting(){if(!s||s.mode!=='meetingMenu')return;hideDialog('meeting-overlay');s.mode='playing';last=performance.now()}
 function resolveMeeting(m,attended){s.meetings=s.meetings.filter(x=>x.id!==m.id);s.actions++;s.weekMeetings++;
  if(attended){s.reputation+=m.mandatory?6:3;s.teamMorale=clamp(s.teamMorale+4);s.patience=clamp(s.patience-5);s.score+=50;toast(`📅 Meeting attended. +${m.mandatory?6:3} reputation, +4 team morale.`)}
  else if(m.mandatory){s.reputation=Math.max(0,s.reputation-6);s.morale=clamp(s.morale-6);s.score+=5;toast('📅 Mandatory meeting declined. -6 reputation, -6 morale.')}
@@ -585,13 +635,13 @@ function draw(){if(!s)return;let t=performance.now()/1000;ctx.clearRect(0,0,W,H)
 function drawPerson(x,y,shirt,skin,mood,main,scale){ctx.save();ctx.translate(x,y);ctx.scale(scale,scale);ctx.fillStyle='#3a4c5270';ctx.beginPath();ctx.ellipse(0,25,17,6,0,0,7);ctx.fill();rr(-16,-7,32,33,10,shirt,'#31445e',3);rr(-12,19,11,12,3,'#3f4b62');rr(2,19,11,12,3,'#3f4b62');rr(-25,-2,11,21,5,skin);rr(14,-2,11,21,5,skin);ctx.fillStyle=skin;ctx.beginPath();ctx.arc(0,-24,20,0,Math.PI*2);ctx.fill();ctx.fillStyle=main?'#3a3547':'#57433f';ctx.beginPath();ctx.moveTo(-20,-25);ctx.quadraticCurveTo(-27,-51,-4,-47);ctx.quadraticCurveTo(21,-50,21,-26);ctx.lineTo(11,-37);ctx.lineTo(-9,-38);ctx.closePath();ctx.fill();if(mood==='😵'){text('×  ×',0,-23,14,'#3a3547')}else if(mood==='😟'){text('•  •',0,-25,14,'#3a3547');text('︵',0,-13,13,'#7a4655')}else {text('•  •',0,-25,14,'#3a3547');text('⌣',0,-13,14,'#885e62')}if(main&&Math.min(s.caffeine,s.morale,s.patience)<35){ctx.strokeStyle='#936888';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(-12,-18);ctx.lineTo(-4,-17);ctx.moveTo(4,-17);ctx.lineTo(13,-18);ctx.stroke()}ctx.restore()}
 function animate(now){if(!last)last=now;const dt=Math.min(.075,(now-last)/1000);last=now;if(s&&s.mode==='playing'){tick(dt);frame++;if(frame%4===0)update();if(s?.event&&$('event-left'))$('event-left').style.width=Math.max(0,s.event.time/16*100)+'%'}draw();requestAnimationFrame(animate)}
 $('modal-btn').addEventListener('click',start);$('board-button').addEventListener('click',openBoard);$('mobile-board-button').addEventListener('click',openBoard);for(const id of ['hud-tickets','hud-bugs','hud-role'])$(id).addEventListener('click',openBoard);$('hud-meetings').addEventListener('click',()=>{if(!s||s.mode!=='playing')return;stationTarget('meeting')});$('station-list').addEventListener('click',e=>{let b=e.target.closest('[data-station]');if(b)stationTarget(b.dataset.station)});$('event-panel').addEventListener('click',e=>{let b=e.target.closest('[data-choice]');if(b)respond(Number(b.dataset.choice))});canvas.addEventListener('click',pointer);$('duck-access').addEventListener('click',interactDuck);$('duck-hotspot').addEventListener('click',interactDuck);$('sound').addEventListener('click',()=>{muted=!muted;$('sound').textContent=muted?'♪ Off':'♪ On';if(!muted)ping()});
-function togglePause(){if(!s||s.mode==='intro'||s.mode==='lost'||s.mode==='won'||s.mode==='between')return;if(s.mode==='playing'){s.mode='paused';openModal({art:'⏸️',tag:'YOU ARE TEMPORARILY FREE',title:'Taking a breather?',body:'Your developer has placed a calendar block called “focus time.” Nobody respects it, but it helps.',btn:'Resume sprint →',action:()=>{s.mode='playing';$('overlay').hidden=true;last=performance.now()}})}else if(s.mode==='paused'){s.mode='playing';$('overlay').hidden=true;last=performance.now()}}
+function togglePause(){if(!s||s.mode==='intro'||s.mode==='lost'||s.mode==='won'||s.mode==='between')return;if(s.mode==='playing'){s.mode='paused';openModal({art:'⏸️',tag:'YOU ARE TEMPORARILY FREE',title:'Taking a breather?',body:'Your developer has placed a calendar block called “focus time.” Nobody respects it, but it helps.',btn:'Resume sprint →',settings:true,action:()=>{s.mode='playing';hideDialog('overlay');last=performance.now()}})}else if(s.mode==='paused'){s.mode='playing';hideDialog('overlay');last=performance.now()}}
 $('pause').addEventListener('click',togglePause);
 window.addEventListener('keydown',e=>{if(e.target.matches('input,textarea'))return;const k=e.key.toLowerCase();if(['arrowleft','arrowright','arrowup','arrowdown',' '].includes(k))e.preventDefault();if(k==='p'&&!e.repeat){togglePause();return}if(k==='b'&&!e.repeat){if(s?.mode==='board')closeBoard();else openBoard();return}if(k==='escape'){if(s?.mode==='board')closeBoard();else if(s?.mode==='meetingMenu')closeMeeting();return}if(s?.mode!=='playing')return;if(k>='1'&&k<='5'){stationTarget(Object.keys(STATIONS)[Number(k)-1]);return}if(k===' '){if(s.active)return;let near=null;for(const [name,st]of Object.entries(STATIONS)){if(Math.hypot(s.position.x-st.x,s.position.y-st.y)<55)near=name}if(near){s.active=near;s.destination=null}return}if(['w','a','s','d','arrowleft','arrowright','arrowup','arrowdown'].includes(k))keys.add(k)});
 window.addEventListener('keyup',e=>keys.delete(e.key.toLowerCase()));window.addEventListener('blur',()=>{keys.clear();if(s?.mode==='playing')togglePause()});document.addEventListener('visibilitychange',()=>{if(document.hidden&&s?.mode==='playing')togglePause()});
 // Rescale hit targets after orientation changes, iframe/modal resizes, or browser UI changes.
 window.addEventListener('resize',positionDuckHotspot);
 if(typeof ResizeObserver!=='undefined'){new ResizeObserver(positionDuckHotspot).observe(canvas)}
-s=fresh();update();requestAnimationFrame(positionDuckHotspot);requestAnimationFrame(animate);
+s=fresh();$('intro-accessibility-settings').innerHTML=settingsMarkup();bindSettings($('intro-accessibility-settings'));update();showDialog('overlay','#modal-btn');requestAnimationFrame(positionDuckHotspot);requestAnimationFrame(animate);
 })();
 </script></body></html>
