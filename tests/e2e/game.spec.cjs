@@ -91,19 +91,25 @@ test('reduced-motion respects OS preference and scene still renders', async ({ p
 });
 
 test('all five days advance and weekly completion is reachable', async ({ page }) => {
-  test.setTimeout(150_000);
+  // Instrument the test response only; no test hooks are shipped in production game.js.
+  await page.route('**/game.js', async route => {
+    const response = await route.fetch();
+    let body = await response.text();
+    const marker = '})();';
+    const index = body.lastIndexOf(marker);
+    if (index < 0) throw new Error('Cannot instrument game loop');
+    body = body.slice(0, index) +
+      "window.__advanceTestDay=()=>{if(s.mode!=='playing')throw new Error('Not playing');s.t=s.duration-.01;tick(.02);update()};\\n" +
+      body.slice(index);
+    await route.fulfill({ response, body });
+  });
+  await page.reload();
   await start(page, { relaxed: true });
-  // Exercise the real animation clock at accelerated wall time.
-  await page.clock.install();
-  for (let day=0;day<5;day++) {
+  for (let day = 0; day < 5; day++) {
     await expect(page.locator('#scene-day')).toContainText(['Monday','Tuesday','Wednesday','Thursday','Friday'][day]);
-    // Clock fast-forward runs the game loop and preserves the actual state transitions.
-    for (let n=0;n<7;n++) {
-      if (await page.locator('#overlay').isVisible()) break;
-      await page.clock.runFor(40000);
-    }
-    await expect(page.locator('#overlay')).toBeVisible({ timeout:10000 });
-    if (day<4) await page.locator('#modal-btn').click();
+    await page.evaluate(() => window.__advanceTestDay());
+    await expect(page.locator('#overlay')).toBeVisible();
+    if (day < 4) await page.locator('#modal-btn').click();
   }
   await expect(page.locator('#modal')).toContainText(/WEEK 1 COMPLETE|Friday|FRIDAY/);
 });
