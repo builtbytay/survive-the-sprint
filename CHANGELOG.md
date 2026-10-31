@@ -7,6 +7,7 @@ Notable changes to Survive the Sprint are documented here. Releases use [Semanti
 - Add branded SVG favicon and social-sharing artwork with Open Graph and X card metadata.
 - Keep the modern external CSS/JavaScript and security headers intact.
 - Add alternate text for social sharing images and allow the branded favicon host in CSP.
+- Replace the placeholder README with game overview, controls, accessibility information, and contributor setup instructions.
 
 ## [1.0.1] - Unreleased
 
