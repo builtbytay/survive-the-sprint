@@ -99,7 +99,7 @@ test('all five days advance and weekly completion is reachable', async ({ page }
     const index = body.lastIndexOf(marker);
     if (index < 0) throw new Error('Cannot instrument game loop');
     body = body.slice(0, index) +
-      "window.__advanceTestDay=()=>{if(s.mode!=='playing')throw new Error('Not playing');s.t=s.duration-.01;tick(.02);update()};\\n" +
+      "window.__advanceTestDay=()=>{if(s.mode!=='playing')throw new Error('Not playing');s.t=s.duration-.01;tick(.02);update()};\n" +
       body.slice(index);
     await route.fulfill({ response, body });
   });
