@@ -1,0 +1,33 @@
+name: Browser regression
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  playwright:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-audit --no-fund
+      - run: npx playwright install --with-deps chromium
+      - name: Verify live production security headers
+        env:
+          SECURITY_PREVIEW_URL: https://sprint.taylord.ink/
+        run: npx playwright test tests/e2e/headers.spec.cjs
+        if: github.ref == 'refs/heads/main'
+      - run: npm test
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: browser-regression-report
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 7
