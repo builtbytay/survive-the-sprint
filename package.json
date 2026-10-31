@@ -1,0 +1,17 @@
+{
+  "name": "survive-the-sprint-tests",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Automated browser and accessibility regression suite for Survive the Sprint",
+  "scripts": {
+    "test": "playwright test",
+    "test:e2e": "playwright test",
+    "test:ui": "playwright test --ui",
+    "test:security": "node scripts/security-check.cjs",
+    "test:all": "npm run test:security && npm run test:e2e"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.14.0",
+    "@playwright/test": "1.64.1"
+  }
+}
