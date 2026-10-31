@@ -1,0 +1,20 @@
+name: Social card crawler audit
+on:
+  pull_request:
+    paths:
+      - 'scripts/social-card-audit.mjs'
+      - '.github/workflows/social-card-audit.yml'
+      - 'public/index.html'
+      - 'public/social-card.png'
+      - 'public/_headers'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  twitterbot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Probe live social preview as Twitterbot
+        run: node scripts/social-card-audit.mjs
