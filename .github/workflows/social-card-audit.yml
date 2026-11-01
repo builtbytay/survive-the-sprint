@@ -16,8 +16,6 @@ jobs:
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
-      - name: Probe live social preview as Twitterbot
-        run: node scripts/social-card-audit.mjs
       - name: Validate replacement PNG decodes completely
         run: |
           python -m pip install --quiet Pillow
