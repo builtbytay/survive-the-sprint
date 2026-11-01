@@ -14,7 +14,6 @@ Someone just scheduled a mandatory meeting at 4:55 PM.
 
 **🎮 [Play Survive the Sprint](https://sprint.taylord.ink/)**
 
-![Survive the Sprint](public/social-card-v102.png)
 
 ## 🧑‍💻 The situation
 
