@@ -1,0 +1,38 @@
+name: Social card crawler audit
+on:
+  pull_request:
+    paths:
+      - 'scripts/social-card-audit.mjs'
+      - '.github/workflows/social-card-audit.yml'
+      - 'public/index.html'
+      - 'public/social-card-v102.png'
+      - 'public/_headers'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  twitterbot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate replacement PNG decodes completely
+        run: |
+          python -m pip install --quiet Pillow
+          python - <<'PY'
+          from pathlib import Path
+          from PIL import Image
+          asset = Path("public/social-card-v102.png")
+          if not asset.is_file():
+              raise SystemExit("Replacement social card missing: upload public/social-card-v102.png directly to this branch.")
+          with Image.open(asset) as im:
+              if im.format != "PNG":
+                  raise SystemExit(f"Expected PNG, got {im.format}")
+              if im.size != (1200, 630):
+                  raise SystemExit(f"Expected 1200x630, got {im.size}")
+              im.verify()
+          with Image.open(asset) as im:
+              im.load()
+              im.convert("RGB").load()
+              print(f"VALID PNG: {im.size[0]}x{im.size[1]}, mode={im.mode}, bytes={asset.stat().st_size}")
+          PY
