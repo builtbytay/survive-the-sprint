@@ -5,7 +5,7 @@ on:
       - 'scripts/social-card-audit.mjs'
       - '.github/workflows/social-card-audit.yml'
       - 'public/index.html'
-      - 'public/social-card.png'
+      - 'public/social-card-v102.png'
       - 'public/_headers'
   workflow_dispatch:
 permissions:
@@ -18,22 +18,23 @@ jobs:
       - uses: actions/checkout@v4
       - name: Probe live social preview as Twitterbot
         run: node scripts/social-card-audit.mjs
-      - name: Inspect PNG transparency and content
+      - name: Validate replacement PNG decodes completely
         run: |
           python -m pip install --quiet Pillow
           python - <<'PY'
-          from PIL import Image, ImageStat, ImageFile
-          ImageFile.LOAD_TRUNCATED_IMAGES = True
-          im=Image.open("public/social-card.png")
-          print(f"PNG_DETAILS: mode={im.mode}, size={im.size}, transparency={im.info.get('transparency', 'none')}")
-          rgba=im.convert('RGBA')
-          alpha=rgba.getchannel('A')
-          print(f"ALPHA_EXTREMA: {alpha.getextrema()} | VISIBLE_BOUNDS: {alpha.getbbox()}")
-          from PIL import ImageChops
-          white=Image.new('RGB', im.size, 'white')
-          white.paste(rgba, mask=alpha)
-          print(f"IMAGE_CONTRAST: {ImageStat.Stat(white).extrema}")
-          print(f"UNIQUE_COLORS: {len(set(white.getdata()))}")
-          print(f"COLOR_SAMPLES: {white.getpixel((0,0))}, {white.getpixel((600,315))}, {white.getpixel((1100,500))}")
-          print(f"NON_WHITE_BOUNDS: {ImageChops.difference(white, Image.new('RGB',im.size,'white')).getbbox()}")
+          from pathlib import Path
+          from PIL import Image
+          asset = Path("public/social-card-v102.png")
+          if not asset.is_file():
+              raise SystemExit("Replacement social card missing: upload public/social-card-v102.png directly to this branch.")
+          with Image.open(asset) as im:
+              if im.format != "PNG":
+                  raise SystemExit(f"Expected PNG, got {im.format}")
+              if im.size != (1200, 630):
+                  raise SystemExit(f"Expected 1200x630, got {im.size}")
+              im.verify()
+          with Image.open(asset) as im:
+              im.load()
+              im.convert("RGB").load()
+              print(f"VALID PNG: {im.size[0]}x{im.size[1]}, mode={im.mode}, bytes={asset.stat().st_size}")
           PY
