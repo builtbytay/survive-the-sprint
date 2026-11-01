@@ -2,7 +2,7 @@
 import assert from 'node:assert/strict';
 
 const origin = (process.env.SOCIAL_CARD_URL || 'https://sprint.taylord.ink/').replace(/\/?$/, '/');
-const imageURL = new URL('social-card.png', origin).href;
+const imageURL = new URL('social-card-v102.png', origin).href;
 const twitterbot = 'Twitterbot/1.0';
 const browser = 'Mozilla/5.0 (compatible; BrowserSocialCardDiagnostic/1.0)';
 const failures = [];
